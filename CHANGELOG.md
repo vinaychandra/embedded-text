@@ -38,6 +38,10 @@ Unreleased
 
  * Fixed an issue where height measurement unexpectedly carried a space that is consumed during drawing.
 
+## Changed:
+
+ * Punctuation characters now end words.
+
 0.1.0 (2020-07-31)
 ==================
 

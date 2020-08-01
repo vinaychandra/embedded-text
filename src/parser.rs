@@ -81,6 +81,10 @@ impl<'a> Parser<'a> {
         // space handling is symmetrical (i.e. starting == ending behaviour)
         c.is_whitespace() && !['\n', '\r', '\u{A0}', '\u{200B}'].contains(&c) || c == '\u{200B}'
     }
+
+    fn is_breaking_char(c: char) -> bool {
+        c.is_ascii_punctuation()
+    }
 }
 
 impl<'a> Iterator for Parser<'a> {
@@ -94,10 +98,22 @@ impl<'a> Iterator for Parser<'a> {
                 let mut iter = self.inner.clone();
 
                 if Self::is_word_char(c) {
+                    if Self::is_breaking_char(c) {
+                        break 'parse Token::Word(unsafe {
+                            // don't worry
+                            string.get_unchecked(0..1)
+                        });
+                    }
+
                     while let Some(c) = iter.next() {
-                        if Self::is_word_char(c) {
+                        let end_token = if Self::is_word_char(c) {
                             self.inner = iter.clone();
+                            Self::is_breaking_char(c)
                         } else {
+                            true
+                        };
+
+                        if end_token {
                             let offset = string.len() - self.inner.as_str().len();
                             break 'parse Token::Word(unsafe {
                                 // don't worry
@@ -199,6 +215,21 @@ mod test {
         assert_eq!(
             Parser::parse(text).collect::<Vec<Token>>(),
             vec![Token::Word("test😅"),]
+        );
+    }
+
+    #[test]
+    fn parse_punctuation() {
+        let text = "..word,word";
+
+        assert_eq!(
+            Parser::parse(text).collect::<Vec<Token>>(),
+            vec![
+                Token::Word("."),
+                Token::Word("."),
+                Token::Word("word,"),
+                Token::Word("word")
+            ]
         );
     }
 
