@@ -27,7 +27,7 @@ impl VerticalTextAlignment for BottomAligned {
             .measure_text_height(styled_text_box.text_box.text, cursor.line_width())
             as i32;
 
-        let box_height = styled_text_box.size().height as i32;
+        let box_height = styled_text_box.bounding_box().size.height as i32;
         let offset = box_height - text_height;
 
         cursor.position.y += offset
@@ -55,10 +55,13 @@ mod test {
             .background_color(BinaryColor::Off)
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::zero(), Point::new(54, 15)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -94,7 +97,7 @@ mod test {
 
         TextBox::new(
             "word1 word2 word3 word4",
-            Rectangle::new(Point::zero(), Point::new(30, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(30, 15)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -136,7 +139,7 @@ mod test {
 
         TextBox::new(
             "word1 word2 word3 word4",
-            Rectangle::new(Point::zero(), Point::new(30, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(30, 15)),
         )
         .into_styled(style)
         .draw(&mut display)

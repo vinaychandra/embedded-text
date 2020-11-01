@@ -113,7 +113,7 @@ fn main() -> Result<(), core::convert::Infallible> {
         .build();
     let mut window = Window::new("TextBox demonstration", &output_settings);
 
-    let mut bounds = Rectangle::new(Point::new(0, 8), Point::new(128, 200));
+    let mut bounds = Rectangle::with_corners(Point::new(0, 8), Point::new(128, 200));
 
     'running: loop {
         if !demo_loop(&mut window, &mut bounds, TopAligned) {

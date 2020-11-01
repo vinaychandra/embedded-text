@@ -17,8 +17,8 @@ impl RectExt for Rectangle {
     #[must_use]
     fn size(self) -> Size {
         // TODO: remove if fixed in embedded-graphics
-        let width = (self.bottom_right.x - self.top_left.x) as u32 + 1;
-        let height = (self.bottom_right.y - self.top_left.y) as u32 + 1;
+        let width = (self.bottom_right().unwrap().x - self.top_left.x) as u32 + 1;
+        let height = (self.bottom_right().unwrap().y - self.top_left.y) as u32 + 1;
 
         Size::new(width, height)
     }
@@ -26,14 +26,14 @@ impl RectExt for Rectangle {
     #[inline]
     #[must_use]
     fn into_well_formed(self) -> Rectangle {
-        Rectangle::new(
+        Rectangle::with_corners(
             Point::new(
-                self.top_left.x.min(self.bottom_right.x),
-                self.top_left.y.min(self.bottom_right.y),
+                self.top_left.x.min(self.bottom_right().unwrap().x),
+                self.top_left.y.min(self.bottom_right().unwrap().y),
             ),
             Point::new(
-                self.top_left.x.max(self.bottom_right.x),
-                self.top_left.y.max(self.bottom_right.y),
+                self.top_left.x.max(self.bottom_right().unwrap().x),
+                self.top_left.y.max(self.bottom_right().unwrap().y),
             ),
         )
     }
@@ -46,8 +46,8 @@ mod test {
     #[test]
     fn test_well_formed() {
         assert_eq!(
-            Rectangle::new(Point::new(0, -4), Point::new(3, 0)),
-            Rectangle::new(Point::new(3, -4), Point::zero()).into_well_formed()
+            Rectangle::with_corners(Point::new(0, -4), Point::new(3, 0)),
+            Rectangle::with_corners(Point::new(3, -4), Point::zero()).into_well_formed()
         );
     }
 }

@@ -32,7 +32,8 @@ impl VerticalOverdraw for Hidden {
         let offset_top = (cursor.bounds.top_left.y - cursor.position.y).max(0);
         // cursor bounds are one row shorter than real bounds for optimization
         // purposes so use the real height here
-        let offset_bottom = (cursor.bounds.bottom_right.y + F::CHARACTER_SIZE.height as i32
+        let offset_bottom = (cursor.bounds.bottom_right().unwrap().y
+            + F::CHARACTER_SIZE.height as i32
             - cursor.position.y)
             .min(F::CHARACTER_SIZE.height as i32);
 
@@ -75,7 +76,7 @@ mod test {
 
         TextBox::new(
             "word and other words",
-            Rectangle::new(Point::new(0, 0), Point::new(54, 14)),
+            Rectangle::with_corners(Point::new(0, 0), Point::new(54, 14)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -108,10 +109,13 @@ mod test {
             .height_mode(Exact(Visible))
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::new(0, 2), Point::new(54, 5)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::new(0, 2), Point::new(54, 5)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -140,10 +144,13 @@ mod test {
             .height_mode(Exact(Hidden))
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::new(0, 2), Point::new(54, 5)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::new(0, 2), Point::new(54, 5)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,

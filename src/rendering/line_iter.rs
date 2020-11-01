@@ -432,7 +432,10 @@ mod test {
         let parser = Parser::parse("sam\u{00AD}ple");
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(6 * 6 - 1, 8)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 6 - 1, 8)),
+            0,
+        );
 
         let iter: LineElementIterator<'_, _, _, LeftAligned> =
             LineElementIterator::new(parser, cursor, config, None, TabSize::default());
@@ -462,7 +465,10 @@ mod test {
         let parser = Parser::parse("sam\u{00AD}ple");
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(6 * 6 - 2, 16)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 6 - 2, 16)),
+            0,
+        );
 
         let mut line1: LineElementIterator<'_, _, _, LeftAligned> =
             LineElementIterator::new(parser, cursor, config, None, TabSize::default());
@@ -504,7 +510,10 @@ mod test {
             Parser::parse("super\u{AD}cali\u{AD}fragi\u{AD}listic\u{AD}espeali\u{AD}docious");
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(5 * 6 - 1, 16)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(5 * 6 - 1, 16)),
+            0,
+        );
 
         let mut line1: LineElementIterator<'_, _, _, LeftAligned> =
             LineElementIterator::new(parser, cursor, config, None, TabSize::default());
@@ -550,7 +559,7 @@ mod test {
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
         let cursor = Cursor::new(
-            Rectangle::new(
+            Rectangle::with_corners(
                 Point::zero(),
                 Point::new(text.chars().count() as i32 * 6 - 1, 16),
             ),
@@ -584,7 +593,10 @@ mod test {
         let parser = Parser::parse(text);
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(16 * 6 - 1, 16)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(16 * 6 - 1, 16)),
+            0,
+        );
 
         let mut line1: LineElementIterator<'_, _, _, LeftAligned> =
             LineElementIterator::new(parser, cursor, config, None, TabSize::default());
@@ -637,7 +649,7 @@ mod test {
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
         let cursor = Cursor::new(
-            Rectangle::new(Point::zero(), Point::new(100 * 6 - 1, 16)),
+            Rectangle::with_corners(Point::zero(), Point::new(100 * 6 - 1, 16)),
             0,
         );
 
@@ -669,7 +681,10 @@ mod test {
         let parser = Parser::parse(text);
         let config: UniformSpaceConfig<Font6x8> = UniformSpaceConfig::default();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(8 * 6 - 1, 16)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(8 * 6 - 1, 16)),
+            0,
+        );
 
         let mut line1: LineElementIterator<'_, _, _, LeftAligned> =
             LineElementIterator::new(parser, cursor, config, None, TabSize::default());

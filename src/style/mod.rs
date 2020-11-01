@@ -336,7 +336,7 @@ where
         max_line_width: u32,
     ) -> (u32, u32, Option<Token<'a>>, bool) {
         let cursor: Cursor<F> = Cursor::new(
-            Rectangle::new(
+            Rectangle::with_corners(
                 Point::zero(),
                 Point::new(
                     max_line_width.saturating_sub(1) as i32,

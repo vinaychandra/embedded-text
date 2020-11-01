@@ -65,10 +65,13 @@ mod test {
             .background_color(BinaryColor::Off)
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::zero(), Point::new(54, 7)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 7)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -93,10 +96,13 @@ mod test {
             .text_color(BinaryColor::On)
             .build();
 
-        TextBox::new("O\rX", Rectangle::new(Point::zero(), Point::new(54, 7)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "O\rX",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 7)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -123,7 +129,7 @@ mod test {
 
         TextBox::new(
             "word wrapping",
-            Rectangle::new(Point::zero(), Point::new(54, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -163,7 +169,7 @@ mod test {
 
         TextBox::new(
             "word somereallylongword",
-            Rectangle::new(Point::zero(), Point::new(54, 23)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 23)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -211,7 +217,7 @@ mod test {
 
         TextBox::new(
             "somereallylongword",
-            Rectangle::new(Point::zero(), Point::new(54, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
         )
         .into_styled(style)
         .draw(&mut display)

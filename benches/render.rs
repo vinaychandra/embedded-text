@@ -31,7 +31,7 @@ fn benchmark_render_textbox(c: &mut Criterion) {
         b.iter(|| {
             let obj = TextBox::new(
                 black_box(TEXT),
-                Rectangle::new(Point::zero(), Point::new(6 * 15 - 1, 7)),
+                Rectangle::with_corners(Point::zero(), Point::new(6 * 15 - 1, 7)),
             )
             .into_styled(style);
             let object = obj.create_renderer();
@@ -50,7 +50,7 @@ fn benchmark_render_textbox_aligned(c: &mut Criterion) {
         b.iter(|| {
             let obj = TextBox::new(
                 black_box(TEXT),
-                Rectangle::new(Point::zero(), Point::new(6 * 15 - 1, 7)),
+                Rectangle::with_corners(Point::zero(), Point::new(6 * 15 - 1, 7)),
             )
             .into_styled(style);
             let object = obj.create_renderer();
@@ -69,7 +69,7 @@ fn benchmark_render_textbox_vertical_aligned(c: &mut Criterion) {
         b.iter(|| {
             let obj = TextBox::new(
                 black_box(TEXT),
-                Rectangle::new(Point::zero(), Point::new(6 * 15 - 1, 7)),
+                Rectangle::with_corners(Point::zero(), Point::new(6 * 15 - 1, 7)),
             )
             .into_styled(style);
             let object = obj.create_renderer();
@@ -89,7 +89,7 @@ fn benchmark_render_textbox_both_aligned(c: &mut Criterion) {
         b.iter(|| {
             let obj = TextBox::new(
                 black_box(TEXT),
-                Rectangle::new(Point::zero(), Point::new(6 * 15 - 1, 7)),
+                Rectangle::with_corners(Point::zero(), Point::new(6 * 15 - 1, 7)),
             )
             .into_styled(style);
             let object = obj.create_renderer();

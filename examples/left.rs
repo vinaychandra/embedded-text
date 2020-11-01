@@ -16,8 +16,11 @@ fn main() -> Result<(), core::convert::Infallible> {
         .height_mode(FitToText)
         .build();
 
-    let text_box = TextBox::new(text, Rectangle::new(Point::zero(), Point::new(128, 0)))
-        .into_styled(textbox_style);
+    let text_box = TextBox::new(
+        text,
+        Rectangle::with_corners(Point::zero(), Point::new(128, 0)),
+    )
+    .into_styled(textbox_style);
 
     // Create a window just tall enough to fit the text.
     let mut display: SimulatorDisplay<BinaryColor> = SimulatorDisplay::new(text_box.size());

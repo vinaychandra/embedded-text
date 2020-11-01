@@ -32,7 +32,7 @@ fn main() -> Result<(), core::convert::Infallible> {
         .line_spacing(2)
         .build();
 
-    let bounds = Rectangle::new(Point::zero(), Point::new(240, 96));
+    let bounds = Rectangle::with_corners(Point::zero(), Point::new(240, 96));
     let mut display: SimulatorDisplay<Rgb888> = SimulatorDisplay::new(bounds.size());
 
     TextBox::new(&text, bounds)

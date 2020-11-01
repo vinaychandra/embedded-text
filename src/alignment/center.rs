@@ -65,7 +65,7 @@ impl VerticalTextAlignment for CenterAligned {
             .measure_text_height(styled_text_box.text_box.text, cursor.line_width())
             as i32;
 
-        let box_height = styled_text_box.size().height as i32;
+        let box_height = styled_text_box.bounding_box().size.height as i32;
         let offset = (box_height - text_height) / 2;
 
         cursor.position.y += offset;
@@ -90,10 +90,13 @@ mod test_horizontal {
             .background_color(BinaryColor::Off)
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::zero(), Point::new(54, 7)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 7)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -118,10 +121,13 @@ mod test_horizontal {
             .text_color(BinaryColor::On)
             .build();
 
-        TextBox::new("O\rX", Rectangle::new(Point::zero(), Point::new(54, 7)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "O\rX",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 7)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,
@@ -148,7 +154,7 @@ mod test_horizontal {
 
         TextBox::new(
             "word wrapping",
-            Rectangle::new(Point::zero(), Point::new(54, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -188,7 +194,7 @@ mod test_horizontal {
 
         TextBox::new(
             "word somereallylongword",
-            Rectangle::new(Point::zero(), Point::new(54, 23)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 23)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -236,7 +242,7 @@ mod test_horizontal {
 
         TextBox::new(
             "somereallylongword",
-            Rectangle::new(Point::zero(), Point::new(54, 15)),
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
         )
         .into_styled(style)
         .draw(&mut display)
@@ -284,10 +290,13 @@ mod test_vertical {
             .background_color(BinaryColor::Off)
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::zero(), Point::new(54, 15)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,

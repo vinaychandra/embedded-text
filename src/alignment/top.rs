@@ -44,10 +44,13 @@ mod test {
             .background_color(BinaryColor::Off)
             .build();
 
-        TextBox::new("word", Rectangle::new(Point::zero(), Point::new(54, 15)))
-            .into_styled(style)
-            .draw(&mut display)
-            .unwrap();
+        TextBox::new(
+            "word",
+            Rectangle::with_corners(Point::zero(), Point::new(54, 15)),
+        )
+        .into_styled(style)
+        .draw(&mut display)
+        .unwrap();
 
         assert_eq!(
             display,

@@ -14,7 +14,7 @@ fn main() -> Result<(), core::convert::Infallible> {
         .theme(BinaryColorTheme::OledBlue)
         .build();
     let mut window = Window::new("TextBox input demonstration", &output_settings);
-    let bounds = Rectangle::new(Point::new(0, 0), Point::new(128, 640));
+    let bounds = Rectangle::with_corners(Point::new(0, 0), Point::new(128, 640));
 
     let inputs: HashMap<Keycode, (&str, &str, &str, &str)> = [
         // (Keycode, (NO, SHIFT, CAPS, ALT_GR))

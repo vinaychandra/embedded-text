@@ -51,7 +51,7 @@ pub trait HeightMode: Copy {
 /// // This TextBox contains two lines of text, but is 60px high
 /// let text_box = TextBox::new(
 ///     "Two lines\nof text",
-///     Rectangle::new(Point::zero(), Point::new(59, 59)),
+///     Rectangle::with_corners(Point::zero(), Point::new(59, 59)),
 /// );
 ///
 /// // Set style, use 6x8 font so the 2 lines are 16px high.
@@ -104,7 +104,7 @@ where
 /// // This TextBox contains two lines of text, but is 1px high
 /// let text_box = TextBox::new(
 ///     "Two lines\nof text",
-///     Rectangle::new(Point::zero(), Point::new(59, 0)),
+///     Rectangle::with_corners(Point::zero(), Point::new(59, 0)),
 /// );
 ///
 /// // Set style, use 6x8 font so the 2 lines are 16px high.
@@ -127,7 +127,7 @@ where
 /// // This TextBox contains two lines of text, but is 1px high
 /// let text_box = TextBox::new(
 ///     "Two lines\nof text",
-///     Rectangle::new(Point::zero(), Point::new(59, 59)),
+///     Rectangle::with_corners(Point::zero(), Point::new(59, 59)),
 /// );
 ///
 /// // Set style, use 6x8 font so the 2 lines are 16px high.
@@ -179,7 +179,7 @@ impl HeightMode for FitToText {
 /// // This TextBox contains two lines of text, but is 1px high
 /// let text_box = TextBox::new(
 ///     "Two lines\nof text",
-///     Rectangle::new(Point::zero(), Point::new(59, 0)),
+///     Rectangle::with_corners(Point::zero(), Point::new(59, 0)),
 /// );
 ///
 /// // Set style, use 6x8 font so the 2 lines are 16px high.
@@ -201,7 +201,7 @@ impl HeightMode for FitToText {
 /// // This TextBox contains two lines of text, but is 60px high
 /// let text_box = TextBox::new(
 ///     "Two lines\nof text",
-///     Rectangle::new(Point::zero(), Point::new(59, 59)),
+///     Rectangle::with_corners(Point::zero(), Point::new(59, 59)),
 /// );
 ///
 /// // Set style, use 6x8 font so the 2 lines are 16px high.
@@ -231,7 +231,7 @@ where
         V: VerticalTextAlignment,
         H: HeightMode,
     {
-        text_box.fit_height_limited(text_box.size().height);
+        text_box.fit_height_limited(text_box.bounding_box().size.height);
     }
 
     #[inline]

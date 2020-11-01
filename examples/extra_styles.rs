@@ -20,11 +20,17 @@ fn main() -> Result<(), core::convert::Infallible> {
         .line_spacing(2)
         .build();
 
-    let text_box = TextBox::new(text, Rectangle::new(Point::zero(), Point::new(96, 0)))
-        .into_styled(underlined_style);
+    let text_box = TextBox::new(
+        text,
+        Rectangle::with_corners(Point::zero(), Point::new(96, 0)),
+    )
+    .into_styled(underlined_style);
 
-    let text_box2 = TextBox::new(text, Rectangle::new(Point::new(96, 0), Point::new(192, 0)))
-        .into_styled(strikethrough_style);
+    let text_box2 = TextBox::new(
+        text,
+        Rectangle::with_corners(Point::new(96, 0), Point::new(192, 0)),
+    )
+    .into_styled(strikethrough_style);
 
     // Create a window just tall enough to fit the text.
     let mut display: SimulatorDisplay<BinaryColor> = SimulatorDisplay::new(Size::new(

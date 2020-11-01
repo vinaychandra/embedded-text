@@ -24,9 +24,9 @@ fn main() -> Result<(), core::convert::Infallible> {
         .vertical_alignment(BottomAligned)
         .build();
 
-    let bounds_top = Rectangle::new(Point::zero(), Point::new(63, 128));
-    let bounds_center = Rectangle::new(Point::new(64, 0), Point::new(127, 128));
-    let bounds_bottom = Rectangle::new(Point::new(128, 0), Point::new(191, 128));
+    let bounds_top = Rectangle::with_corners(Point::zero(), Point::new(63, 128));
+    let bounds_center = Rectangle::with_corners(Point::new(64, 0), Point::new(127, 128));
+    let bounds_bottom = Rectangle::with_corners(Point::new(128, 0), Point::new(191, 128));
 
     TextBox::new(text, bounds_top)
         .into_styled(textbox_style_top)

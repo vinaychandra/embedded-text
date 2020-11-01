@@ -15,10 +15,13 @@ fn main() -> Result<(), core::convert::Infallible> {
 
     let mut display: SimulatorDisplay<Rgb565> = SimulatorDisplay::new(Size::new(129, 129));
 
-    TextBox::new(text, Rectangle::new(Point::zero(), Point::new(128, 128)))
-        .into_styled(textbox_style)
-        .draw(&mut display)
-        .unwrap();
+    TextBox::new(
+        text,
+        Rectangle::with_corners(Point::zero(), Point::new(128, 128)),
+    )
+    .into_styled(textbox_style)
+    .draw(&mut display)
+    .unwrap();
 
     let output_settings = OutputSettingsBuilder::new().build();
     Window::new("Hello TextBox with text background color", &output_settings).show_static(&display);

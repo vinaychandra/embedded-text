@@ -128,7 +128,8 @@ where
                 State::FetchNext => {
                     // HACK: avoid drawing the underline outside of the text box
                     let underlined = if self.style.underlined {
-                        self.inner.cursor.position.y < self.inner.cursor.bounds.bottom_right.y
+                        self.inner.cursor.position.y
+                            < self.inner.cursor.bounds.bottom_right().unwrap().y
                     } else {
                         false
                     };
@@ -286,7 +287,7 @@ mod test {
 
         let mut iter = test_rendered_text(
             " Some sample text",
-            Rectangle::new(Point::zero(), Point::new(6 * 7 - 1, 8)),
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 7 - 1, 8)),
             style,
             &[
                 ".......###....................",
@@ -313,7 +314,7 @@ mod test {
             .build();
 
         let mut cursor = Cursor::new(
-            Rectangle::new(Point::new(0, 8), Point::new(6 * 7 - 1, 16)),
+            Rectangle::with_corners(Point::new(0, 8), Point::new(6 * 7 - 1, 16)),
             style.line_spacing,
         );
         cursor.position.y -= 8;
@@ -338,7 +339,7 @@ mod test {
 
         let iter = test_rendered_text(
             "Some\u{A0}sample text",
-            Rectangle::new(Point::zero(), Point::new(6 * 7 - 1, 8)),
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 7 - 1, 8)),
             style,
             &[
                 ".###......................................",
@@ -363,7 +364,7 @@ mod test {
 
         let iter = test_rendered_text(
             "Some sample text",
-            Rectangle::new(Point::zero(), Point::new(6 * 2 - 1, 7)),
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 2 - 1, 7)),
             style,
             &[
                 ".###........",
@@ -388,7 +389,7 @@ mod test {
 
         test_rendered_text(
             "Some \nsample text",
-            Rectangle::new(Point::zero(), Point::new(6 * 7 - 1, 7)),
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 7 - 1, 7)),
             style,
             &[
                 ".###..........................",
@@ -412,7 +413,10 @@ mod test {
             .background_color(BinaryColor::Off)
             .build();
 
-        let cursor = Cursor::new(Rectangle::new(Point::zero(), Point::new(6 * 7 - 1, 7)), 0);
+        let cursor = Cursor::new(
+            Rectangle::with_corners(Point::zero(), Point::new(6 * 7 - 1, 7)),
+            0,
+        );
         let mut iter = StyledLinePixelIterator::new(parser, cursor, config, style, None);
         let mut display = MockDisplay::new();
 
@@ -442,7 +446,7 @@ mod test {
 
         let parser = Parser::parse("Some  sample text");
         let config = UniformSpaceConfig::default();
-        let bounds = Rectangle::new(Point::zero(), Point::new(6 * 5 - 1, 7));
+        let bounds = Rectangle::with_corners(Point::zero(), Point::new(6 * 5 - 1, 7));
         let cursor = Cursor::new(bounds, style.line_spacing);
         let mut iter = StyledLinePixelIterator::new(parser, cursor, config, style, None);
         let mut display = MockDisplay::new();
@@ -488,7 +492,7 @@ mod test {
 
         test_rendered_text(
             "s",
-            Rectangle::new(Point::zero(), Point::new(6 - 1, 7)),
+            Rectangle::with_corners(Point::zero(), Point::new(6 - 1, 7)),
             style,
             &[
                 "......             ",

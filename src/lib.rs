@@ -50,7 +50,7 @@
 //!         .text_color(BinaryColor::On)
 //!         .build();
 //!
-//!     let text_box = TextBox::new(text, Rectangle::new(Point::zero(), Point::new(128, 0)))
+//!     let text_box = TextBox::new(text, Rectangle::with_corners(Point::zero(), Point::new(128, 0)))
 //!         .into_styled(textbox_style);
 //!
 //!     // Create a window just tall enough to fit the text.
@@ -171,7 +171,7 @@ impl<'a> TextBox<'a> {
     ///
     /// let text_box = TextBox::new(
     ///     "Two lines\nof text",
-    ///     Rectangle::new(Point::zero(), Point::new(59, 59)),
+    ///     Rectangle::with_corners(Point::zero(), Point::new(59, 59)),
     /// );
     /// let style = TextBoxStyleBuilder::new(Font6x8)
     ///     .height_mode(ShrinkToText(FullRowsOnly))
@@ -228,20 +228,8 @@ impl Transform for TextBox<'_> {
 impl Dimensions for TextBox<'_> {
     #[inline]
     #[must_use]
-    fn top_left(&self) -> Point {
-        self.bounds.top_left
-    }
-
-    #[inline]
-    #[must_use]
-    fn bottom_right(&self) -> Point {
-        self.bounds.bottom_right
-    }
-
-    #[inline]
-    #[must_use]
-    fn size(&self) -> Size {
-        RectExt::size(self.bounds)
+    fn bounding_box(&self) -> Rectangle {
+        self.bounds
     }
 }
 
@@ -293,20 +281,21 @@ where
         // Measure text given the width of the textbox
         let text_height = self
             .style
-            .measure_text_height(self.text_box.text, self.text_box.size().width)
+            .measure_text_height(self.text_box.text, self.text_box.bounding_box().size.width)
             .min(max_height)
             .min(i32::max_value() as u32) as i32;
 
         // Apply height
-        let y = self.text_box.bounds.top_left.y;
-        let new_y = y.saturating_add(text_height - 1);
-        self.text_box.bounds.bottom_right.y = new_y;
+        // let y = self.text_box.bounds.top_left.y;
+        // let new_y = y.saturating_add(text_height - 1);
+        // self.text_box.bounds.bottom_right.y = new_y;
+        self.text_box.bounds.size.height = (text_height - 1) as u32;
 
         self
     }
 }
 
-impl<'a, C, F, A, V, H> Drawable<C> for &'a StyledTextBox<'a, C, F, A, V, H>
+impl<'a, C, F, A, V, H> Drawable for StyledTextBox<'a, C, F, A, V, H>
 where
     C: PixelColor,
     F: Font + Copy,
@@ -315,8 +304,10 @@ where
     StyledTextBox<'a, C, F, A, V, H>: RendererFactory<'a, C>,
     H: HeightMode,
 {
+    type Color = C;
+
     #[inline]
-    fn draw<D: DrawTarget<C>>(self, display: &mut D) -> Result<(), D::Error> {
+    fn draw<D: DrawTarget<Color = C>>(&self, display: &mut D) -> Result<(), D::Error> {
         display.draw_iter(StyledTextBox::create_renderer(self))
     }
 }
@@ -356,19 +347,7 @@ where
 {
     #[inline]
     #[must_use]
-    fn top_left(&self) -> Point {
-        self.text_box.bounds.top_left
-    }
-
-    #[inline]
-    #[must_use]
-    fn bottom_right(&self) -> Point {
-        self.text_box.bounds.bottom_right
-    }
-
-    #[inline]
-    #[must_use]
-    fn size(&self) -> Size {
-        self.text_box.size()
+    fn bounding_box(&self) -> Rectangle {
+        self.text_box.bounds
     }
 }
