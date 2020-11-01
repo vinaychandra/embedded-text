@@ -258,7 +258,7 @@ mod test {
         pattern: &[&str],
     ) -> StyledLinePixelIterator<'a, C, F, UniformSpaceConfig<F>, A, V, H>
     where
-        C: PixelColor + From<Rgb> + embedded_graphics::mock_display::ColorMapping<C>,
+        C: PixelColor + From<Rgb> + embedded_graphics::mock_display::ColorMapping,
         F: Font + Copy,
         A: HorizontalTextAlignment,
         V: VerticalTextAlignment,
@@ -268,13 +268,14 @@ mod test {
         let config = UniformSpaceConfig::default();
 
         let cursor = Cursor::new(bounds, style.line_spacing);
-        let mut iter = StyledLinePixelIterator::new(parser, cursor, config, style, None);
+        let iter = StyledLinePixelIterator::new(parser, cursor, config, style, None);
         let mut display = MockDisplay::new();
 
         iter.draw(&mut display).unwrap();
 
         assert_eq!(display, MockDisplay::from_pattern(pattern));
 
+        let iter = StyledLinePixelIterator::new(parser, cursor, config, style, None);
         iter
     }
 

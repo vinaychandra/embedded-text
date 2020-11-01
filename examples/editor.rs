@@ -72,7 +72,8 @@ fn main() -> Result<(), core::convert::Infallible> {
         .build();
 
     'running: loop {
-        let mut display: SimulatorDisplay<BinaryColor> = SimulatorDisplay::new(bounds.size());
+        let mut display: SimulatorDisplay<BinaryColor> =
+            SimulatorDisplay::new(bounds.bounding_box().size);
 
         TextBox::new(&text, bounds)
             .into_styled(textbox_style)
